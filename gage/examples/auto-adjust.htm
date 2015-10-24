@@ -4,41 +4,51 @@
   <head>
     <title>Auto-adjust</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <style>
-      body {
-        text-align: center;
+      html,body {
+        overflow: hidden;
+        width: 100%;
+        background-color: #ffe400;
+        /*
+        background-color: #ffaa55;
+        background-image: url("./charin.jpg");
+        */
       }
 
       #g1 {
-        width:400px; height:320px;
-        display: inline-block;
-        margin: 1em;
+        margin-left: -17px;
+        width:200px; 
       }
 
-      p {
-        display: block;
-        width: 450px;
-        margin: 2em auto;
-        text-align: left;
+      #icon {
+          padding-left: 100px;
       }
+
     </style>
 
 
   </head>
   <body>
     <div id="g1"></div>
+    <img style="margin-left:30px;" width="100px" src="charin.jpg" />
     <script src="../raphael-2.1.4.min.js"></script>
     <script src="../justgage-1.1.0.min.js"></script>
     <script>
-      var g1;
 
       window.onload = function(){
         var g1 = new JustGage({
           id: "g1",
-          value: getRandomInt(0, 10000),
+          //value: getRandomInt(0, 10000),
+          value: 0,
           min: 0,
-          max: 10000,
+          max: 3000,
+          levelColors: new Array('#ff0000', '#ffff00', '#00ff00'),
           title: "残金",
+          labelFontColor: "#000000",
+          titleFontColor: "#000000",
           label: "円"
         });
 
@@ -48,11 +58,18 @@
             url: "./get.php",
             success: function(msg){
               console.log(msg);
-              g1.refresh(getRandomInt(0, 10000));
+              //g1.refresh(getRandomInt(0, 10000));
+              g1.refresh(Number(msg));
             }
           });
         }, 2500);
+
+
+$(window).on('touchmove.noScroll', function(e) {
+            e.preventDefault();
+            });
       };
+    
     </script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   </body>
